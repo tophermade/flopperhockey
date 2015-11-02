@@ -1,12 +1,20 @@
 ﻿#pragma strict
 
 var lumbergh 		: GameObject;
+var ripple 			: GameObject;
+var rippleSpawn 	: GameObject;
 
 var goingRight 		: boolean 		= true;
 
 var currentSpeed 	: Vector2;
 var speed 			: float 		= 3;
 
+
+
+function DestroyRipple(ripple: GameObject){
+	yield WaitForSeconds(3);
+	Destroy(ripple);
+}
 
 
 function ChangeDirection(){
@@ -17,6 +25,8 @@ function ChangeDirection(){
 		goingRight =  true;
 		currentSpeed = Vector2(speed,speed);
 	}
+	var newRipple = Instantiate(ripple, rippleSpawn.transform.position, Quaternion.identity);
+	DestroyRipple(newRipple);
 }
 
 
