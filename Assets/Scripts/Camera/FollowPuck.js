@@ -20,7 +20,7 @@ function Start () {
 	SetupRound();
 }
 
-function Update () {
+function FixedUpdate () {
 	if(playing){
 		transform.position.y = puck.transform.position.y + 1.25;
 	}
