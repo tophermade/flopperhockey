@@ -39,6 +39,8 @@ function OnCollisionEnter2D(other : Collision2D){
 
 	} else if(tag == "Obstacle"){
 		print("it was an obstacle");
+		lumbergh.SendMessage("EndRound");
+		currentSpeed = Vector2(0,0);
 	}
 }
 
