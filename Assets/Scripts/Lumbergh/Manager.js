@@ -74,8 +74,10 @@ function StartRound(){
 	puck.SendMessage("StartRound");
 
 	if(PlayerPrefs.GetInt("Highscore")){
+		var hs : int = PlayerPrefs.GetInt("Highscore");
 		if(PlayerPrefs.GetInt("Highscore") > 0){
-			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, PlayerPrefs.GetInt("Highscore") *5, 0), Quaternion.identity);
+			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, hs *5, 0), Quaternion.identity);
+			highScoreSpot.SendMessage("Highscore", hs);
 		}
 	} else {	
 		PlayerPrefs.SetInt("Highscore",0);

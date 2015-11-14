@@ -1,8 +1,11 @@
 ﻿#pragma strict
 
 var lumbergh 		: GameObject;
+
 var ripple 			: GameObject;
 var rippleSpawn 	: GameObject;
+
+var darkening 		: GameObject;
 
 var playing 		: boolean 		= false;
 var goingRight 		: boolean 		= true;
