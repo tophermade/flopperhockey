@@ -8,8 +8,10 @@ public class ControllerMaster : MonoBehaviour {
     public GameObject currentButton;
     public GameObject onClickButton;
 
-    public string inactiveColor = "6598EC";
-    public string highlightColor = "333333";
+    // public string inactiveColor = "6598EC";
+    // public string highlightColor = "333333";
+    public Color inactiveColor = new Color(1F,1F,1F,0.4F);
+    public Color highlightColor = new Color(1F,1F,1F,0.8F);
 
     public bool canMove = true;
 

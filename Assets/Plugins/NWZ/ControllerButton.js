@@ -27,11 +27,17 @@ function HexToColor(hex : String) : Color{
 function Deactivate(highlight : String){
 	buttonSprite.GetComponent(SpriteRenderer).color = HexToColor(highlight);
 }
+function Deactivate(highlight : Color){
+	buttonSprite.GetComponent(SpriteRenderer).color = highlight;
+}
 
 
 
 function Activate(highlight : String){
 	buttonSprite.GetComponent(SpriteRenderer).color = HexToColor(highlight);
+}
+function Activate(highlight : Color){
+	buttonSprite.GetComponent(SpriteRenderer).color = highlight;
 }
 
 

@@ -17,10 +17,8 @@ function Awake(){
 
 function Start () {
 	menuParent = GameObject.Find("MenuRoot");
-	
 	baseColor = menuParent.GetComponent(MasterButtonColors).baseColor;
 	hoverColor = menuParent.GetComponent(MasterButtonColors).baseColor;
-
 	gameObject.GetComponent(SpriteRenderer).color = baseColor;
 }
 

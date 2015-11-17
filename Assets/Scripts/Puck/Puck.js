@@ -11,6 +11,7 @@ var playing 		: boolean 		= false;
 var goingRight 		: boolean 		= true;
 
 var currentSpeed 	: Vector2;
+var accSpeed 		: float 		= 0;
 var speed 			: float 		= 3;
 
 
@@ -25,10 +26,10 @@ function ChangeDirection(){
 	if(playing){
 		if(goingRight){
 			goingRight = false;
-			currentSpeed = Vector2(-speed,speed);
+			currentSpeed = Vector2(-accSpeed,accSpeed);
 		} else{
 			goingRight =  true;
-			currentSpeed = Vector2(speed,speed);
+			currentSpeed = Vector2(accSpeed,accSpeed);
 		}
 		var newRipple = Instantiate(ripple, rippleSpawn.transform.position, Quaternion.identity);
 		DestroyRipple(newRipple);
@@ -55,7 +56,8 @@ function OnCollisionEnter2D(other : Collision2D){
 
 
 function StartRound(){
-	currentSpeed = Vector2(speed,speed);
+	accSpeed = .1;
+	currentSpeed = Vector2(accSpeed,accSpeed);
 	playing = true;
 }
 
@@ -67,8 +69,19 @@ function Start () {
 
 
 
-function Update () {
+function FixedUpdate () {
 	if(playing){
+
+		if(accSpeed < speed){
+			accSpeed = accSpeed +.02;
+		}
+
+		if(goingRight){
+			currentSpeed = Vector2(-accSpeed,accSpeed);
+		} else{
+			currentSpeed = Vector2(accSpeed,accSpeed);
+		}
+
 		GetComponent(Rigidbody2D).velocity = currentSpeed;
 	} else {
 		GetComponent(Rigidbody2D).velocity = Vector2(0,0);

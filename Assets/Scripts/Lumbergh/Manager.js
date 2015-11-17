@@ -16,6 +16,9 @@ var scoreDisplay 		: GameObject;
 var playing 			: boolean 		= false;
 
 var score 				: int 			= 0;
+
+var spawnCount 			: int 			= 0;
+var lastSpawnAt 		: float 		= 0;
 var lastSpawnTime  		: float 		= 0;
 
 var startingPosition 	: Vector2 		= Vector2(0,0);
@@ -35,6 +38,8 @@ function SpawnObstacle(){
 
 	lastSpawnPosition = spawns[spawnInt];
 	var newObstacle = Instantiate(obstacle, spawns[spawnInt].transform.position, Quaternion.identity);
+
+	spawnCount++;
 }
 
 
@@ -91,22 +96,26 @@ function Start () {
 	if(!puck){
 		puck = GameObject.Find("Puck");
 	}
-	StartRound();
-	SpawnObstacle();
+	//StartRound();
+	//SpawnObstacle();
 }
 
 
 
 function Update () {
+	var puckPosition : float = puck.transform.position.y;
+	print(lastSpawnAt);
+
 	if(playing){
 		var oldScore : float = score;
-		score = puck.transform.position.y / 5;
+		score = puckPosition / 5;
 		if(score > oldScore + .95){
 			UpdateScoreDisplay();
 		}
 	}
 
-	if(playing && lastSpawnTime < Time.time){
+	if(playing && puckPosition > lastSpawnAt){
+		lastSpawnAt = puckPosition +6;
 		lastSpawnTime = Time.time + .6;
 		SpawnObstacle();
 	}
