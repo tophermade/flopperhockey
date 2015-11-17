@@ -79,8 +79,7 @@ function EndRound(){
 }
 
 
-function SetupRound(){	
-
+function SetupRound(){
 	score = 0;
 	spawnCount = 0;
 	lastSpawnAt = 0;
@@ -88,7 +87,7 @@ function SetupRound(){
 	playing = true;
 
 	UpdateScoreDisplay();
-	
+
 	puck.transform.position = startingPosition;	
 	yield WaitForSeconds(.5);
 	DestroyObstacles();
@@ -105,6 +104,7 @@ function StartRound(){
 		var hs : int = PlayerPrefs.GetInt("Highscore");
 		if(PlayerPrefs.GetInt("Highscore") > 0){
 			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, hs *5, 0), Quaternion.identity);
+			highScoreSpot.transform.parent = obstacleParent.transform;
 			highScoreSpot.SendMessage("Highscore", hs);
 		}
 	} else {	

@@ -17,7 +17,7 @@ var speed 			: float 		= 3;
 
 
 function DisableTrail(){
-	
+
 }
 
 
@@ -56,6 +56,23 @@ function OnCollisionEnter2D(other : Collision2D){
 		Camera.main.SendMessage("ShakeUsingPreset", "SmallShake");
 		lumbergh.SendMessage("EndRound");
 		currentSpeed = Vector2(0,0);
+	} else if(tag == "Pickup"){
+		lumbergh.SendMessage("PickupCoin");
+		yield WaitForSeconds(1);
+		Destroy(other.transform.gameObject);
+	}
+}
+
+
+
+function OnTriggerEnter2D(other : Collider2D){
+	print("hit trigger");
+	var tag : String = other.transform.gameObject.tag;
+
+	if(tag == "Pickup"){
+		lumbergh.SendMessage("PickupCoin");
+		other.transform.parent.transform.gameObject.GetComponent(Animator).SetTrigger("Play");
+		//Destroy(other.transform.gameObject);
 	}
 }
 
