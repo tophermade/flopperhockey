@@ -1,17 +1,22 @@
 ﻿#pragma strict
 
 var puckObject 			: GameObject;
-var spawnParent 		: GameObject;
+var obstacleParent 		: GameObject;
 var spawns 				: GameObject[];
 
 var lastSpawnPosition 	: GameObject;
 var obstacle 			: GameObject;
 var puck 				: GameObject;
 
+var menuRoot 			: GameObject;
+var gameOverPanel 		: GameObject;
+
 var highScoreSpot 		: GameObject;
 var highScorePrefab 	: GameObject;
+var highScoreGO 		: GameObject;
 
 var scoreDisplay 		: GameObject;
+var scoreDisplayGO 		: GameObject;
 
 var playing 			: boolean 		= false;
 
@@ -26,6 +31,7 @@ var startingPosition 	: Vector2 		= Vector2(0,0);
 
 function UpdateScoreDisplay(){
 	scoreDisplay.GetComponent(TextMesh).text = score.ToString();
+	scoreDisplayGO.GetComponent(TextMesh).text = score.ToString();
 }
 
 
@@ -38,7 +44,7 @@ function SpawnObstacle(){
 
 	lastSpawnPosition = spawns[spawnInt];
 	var newObstacle = Instantiate(obstacle, spawns[spawnInt].transform.position, Quaternion.identity);
-
+	newObstacle.transform.parent = obstacleParent.transform;
 	spawnCount++;
 }
 
@@ -46,8 +52,11 @@ function SpawnObstacle(){
 
 // round helpers
 function DestroyObstacles(){
-
+	for(var child : Transform in obstacleParent.transform){
+		Destroy(child.gameObject);
+	}
 }
+
 
 function ProcessScore(){
 	if(PlayerPrefs.GetInt("Highscore") > score){
@@ -55,6 +64,8 @@ function ProcessScore(){
 	} else {
 		PlayerPrefs.SetInt("Highscore", score);
 	}
+
+	highScoreGO.GetComponent(TextMesh).text = "Best " + PlayerPrefs.GetInt("Highscore").ToString();
 }
 
 
@@ -62,14 +73,26 @@ function ProcessScore(){
 function EndRound(){
 	playing = false;
 	ProcessScore();
+
+	yield WaitForSeconds(.5);
+	menuRoot.SendMessage("ChangeActive", gameOverPanel);
 }
 
 
-function SetupRound(){
+function SetupRound(){	
+
 	score = 0;
+	spawnCount = 0;
+	lastSpawnAt = 0;
+
 	playing = true;
+
+	UpdateScoreDisplay();
+	
+	puck.transform.position = startingPosition;	
+	yield WaitForSeconds(.5);
 	DestroyObstacles();
-	puck.transform.position = startingPosition;
+	puck.transform.Find("RippleSpawner").GetComponent(TrailRenderer).enabled = true;
 }
 
 
@@ -90,6 +113,12 @@ function StartRound(){
 }
 
 
+function RestartGame(){
+	puck.transform.Find("RippleSpawner").GetComponent(TrailRenderer).enabled = false;
+	StartRound();
+}
+
+
 
 // unity standard
 function Start () {
@@ -104,7 +133,7 @@ function Start () {
 
 function Update () {
 	var puckPosition : float = puck.transform.position.y;
-	print(lastSpawnAt);
+	//print(lastSpawnAt);
 
 	if(playing){
 		var oldScore : float = score;

@@ -16,6 +16,12 @@ var speed 			: float 		= 3;
 
 
 
+function DisableTrail(){
+	
+}
+
+
+
 function DestroyRipple(ripple: GameObject){
 	yield WaitForSeconds(3);
 	Destroy(ripple);
