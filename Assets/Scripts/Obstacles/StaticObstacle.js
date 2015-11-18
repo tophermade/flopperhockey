@@ -18,6 +18,12 @@ function Start () {
 
 	if(chanceToShow == 3 && coins.length > 0){
 		coins[showThis].SetActive(true);
+
+		var coinValue = Random.Range(1,7);
+		var coinText: GameObject = coins[showThis].transform.Find("Pickup/Count").gameObject;
+
+		coinText.GetComponent(TextMesh).text = coinValue.ToString();
+		coins[showThis].transform.Find("Pickup").gameObject.GetComponent(StarPickup).starValue = coinValue;
 	}
 
 }
