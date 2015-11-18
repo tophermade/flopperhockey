@@ -12,8 +12,12 @@ var goingRight 		: boolean 		= true;
 
 var currentSpeed 	: Vector2;
 var accSpeed 		: float 		= 0;
-var speed 			: float 		= 3;
+var speed 			: float 		= 6;
 
+
+function Boost(newSpeed : int){
+	speed = newSpeed;
+}
 
 
 function DisableTrail(){
@@ -53,13 +57,14 @@ function OnCollisionEnter2D(other : Collision2D){
 	} else if(tag == "Obstacle"){
 		print("it was an obstacle");
 		playing = false;
+		gameObject.GetComponent(CircleCollider2D).enabled = false;
 		Camera.main.SendMessage("ShakeUsingPreset", "SmallShake");
 		lumbergh.SendMessage("EndRound");
 		currentSpeed = Vector2(0,0);
 	} else if(tag == "Pickup"){
 		lumbergh.SendMessage("PickupCoin");
 		yield WaitForSeconds(1);
-		Destroy(other.transform.gameObject);
+		other.transform.gameObject.SendMessage("DestroySelf");
 	}
 }
 
@@ -80,8 +85,10 @@ function OnTriggerEnter2D(other : Collider2D){
 
 function StartRound(){
 	accSpeed = .1;
+	speed = 6;
 	currentSpeed = Vector2(accSpeed,accSpeed);
 	playing = true;
+	gameObject.GetComponent(CircleCollider2D).enabled = true;
 }
 
 
@@ -96,7 +103,11 @@ function FixedUpdate () {
 	if(playing){
 
 		if(accSpeed < speed){
-			accSpeed = accSpeed +.02;
+			if(speed < 7){
+				accSpeed = accSpeed +.02;
+			} else {
+				accSpeed = accSpeed +.0075;
+			}
 		}
 
 		if(goingRight){

@@ -2,9 +2,10 @@
 
 var puckObject 			: GameObject;
 var obstacleParent 		: GameObject;
-var spawns 				: GameObject[];
+var spawn 				: GameObject;
 
-var lastSpawnPosition 	: GameObject;
+var obstacles 			: GameObject[];
+
 var obstacle 			: GameObject;
 var puck 				: GameObject;
 
@@ -18,6 +19,8 @@ var highScoreGO 		: GameObject;
 var scoreDisplay 		: GameObject;
 var scoreDisplayGO 		: GameObject;
 
+var bank 				: GameObject;
+
 var playing 			: boolean 		= false;
 
 var score 				: int 			= 0;
@@ -29,6 +32,13 @@ var lastSpawnTime  		: float 		= 0;
 var startingPosition 	: Vector2 		= Vector2(0,0);
 
 
+
+// play helpers
+function PickupCoin(){
+	bank.SendMessage("Deposit", 3);
+}
+
+
 function UpdateScoreDisplay(){
 	scoreDisplay.GetComponent(TextMesh).text = score.ToString();
 	scoreDisplayGO.GetComponent(TextMesh).text = score.ToString();
@@ -36,16 +46,25 @@ function UpdateScoreDisplay(){
 
 
 function SpawnObstacle(){
-	var spawnInt : int = Random.Range(0, spawns.length);
-	
-	if(spawns[spawnInt] == lastSpawnPosition && spawnInt > 0){
-		spawnInt = spawnInt-1;
-	}
+	var obstacleID : int = Random.Range(0, obstacles.length);
+	obstacle = obstacles[obstacleID];
 
-	lastSpawnPosition = spawns[spawnInt];
-	var newObstacle = Instantiate(obstacle, spawns[spawnInt].transform.position, Quaternion.identity);
+	var newObstacle = Instantiate(obstacle, spawn.transform.position, Quaternion.identity);
 	newObstacle.transform.parent = obstacleParent.transform;
 	spawnCount++;
+
+	if(newObstacle.name == "MediumObstacle"){
+
+	} else {
+
+	}
+	
+	// if(spawns[spawnInt] == lastSpawnPosition && spawnInt > 0){
+	// 	spawnInt = spawnInt-1;
+	// }
+
+	// lastSpawnPosition = spawns[spawnInt];
+
 }
 
 
@@ -67,6 +86,7 @@ function ProcessScore(){
 
 	highScoreGO.GetComponent(TextMesh).text = "Best " + PlayerPrefs.GetInt("Highscore").ToString();
 }
+
 
 
 // rounds
@@ -141,10 +161,50 @@ function Update () {
 		if(score > oldScore + .95){
 			UpdateScoreDisplay();
 		}
+
+		if(score == 10){
+			puck.SendMessage("Boost", 6.5);	
+		}
+
+		if(score == 20){
+			puck.SendMessage("Boost", 7);	
+		}
+
+		if(score == 30){
+			puck.SendMessage("Boost", 7.5);	
+		}
+
+		if(score == 40){
+			puck.SendMessage("Boost", 8);	
+		}
+
+		if(score == 50){
+			puck.SendMessage("Boost", 8.5);	
+		}
+
+		if(score == 50){
+			puck.SendMessage("Boost", 9);	
+		}
+
+		if(score == 60){
+			puck.SendMessage("Boost", 9.5);	
+		}
+
+		if(score == 70){
+			puck.SendMessage("Boost", 10);	
+		}
+
+		if(score == 110){
+			puck.SendMessage("Boost", 11);	
+		}
+
+		if(score == 200){
+			puck.SendMessage("Boost", 13);	
+		}
 	}
 
 	if(playing && puckPosition > lastSpawnAt){
-		lastSpawnAt = puckPosition +6;
+		lastSpawnAt = puckPosition +9;
 		lastSpawnTime = Time.time + .6;
 		SpawnObstacle();
 	}
