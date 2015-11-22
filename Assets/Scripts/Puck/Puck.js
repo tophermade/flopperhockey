@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var lumbergh 		: GameObject;
+var soundAgent 		: GameObject;
 
 var ripple 			: GameObject;
 var rippleSpawn 	: GameObject;
@@ -34,6 +35,7 @@ function DestroyRipple(ripple: GameObject){
 
 function ChangeDirection(){
 	if(playing){
+		soundAgent.SendMessage("PlaySoundString", "changedirection");
 		if(goingRight){
 			goingRight = false;
 			currentSpeed = Vector2(-accSpeed,accSpeed);
@@ -52,17 +54,17 @@ function OnCollisionEnter2D(other : Collision2D){
 	print("hit something");
 	var tag : String = other.transform.gameObject.tag;
 
-	if(tag == "Pickup"){
-
-	} else if(tag == "Obstacle"){
+	if(tag == "Obstacle"){
 		print("it was an obstacle");
 		playing = false;
 		gameObject.GetComponent(CircleCollider2D).enabled = false;
 		Camera.main.SendMessage("ShakeUsingPreset", "SmallShake");
 		lumbergh.SendMessage("EndRound");
+		soundAgent.SendMessage("PlaySoundString", "blockhit1");
 		currentSpeed = Vector2(0,0);
 	} else if(tag == "Pickup"){
 		lumbergh.SendMessage("PickupCoin");
+		soundAgent.SendMessage("PlaySoundString", "coin");
 		yield WaitForSeconds(1);
 		other.transform.gameObject.SendMessage("DestroySelf");
 	}
@@ -76,7 +78,11 @@ function OnTriggerEnter2D(other : Collider2D){
 
 	if(tag == "Pickup"){
 		lumbergh.SendMessage("PickupCoin");
+		soundAgent.SendMessage("PlaySoundString", "coin");
 		other.transform.parent.transform.gameObject.GetComponent(Animator).SetTrigger("Play");
+
+		yield WaitForSeconds(1);
+		other.transform.gameObject.SendMessage("DestroySelf");
 		//Destroy(other.transform.gameObject);
 	}
 }
@@ -94,7 +100,8 @@ function StartRound(){
 
 
 function Start () {
-	lumbergh = GameObject.Find("Lumbergh");
+	lumbergh 	= GameObject.Find("Lumbergh");
+	soundAgent 	= GameObject.Find("SoundAgent");
 }
 
 
