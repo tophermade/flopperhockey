@@ -22,13 +22,13 @@ function PlaySoundString(theClip : String){
 
 	if(theClip == 'tap'){
 		soundToPlay = soundOne;
-		level = 1;
+		level = .75;
 	} else if(theClip == 'badtap'){
 		soundToPlay = soundTwo;
 		
 	} else if(theClip == 'blockhit1'){
 		soundToPlay = soundThree;
-		level = .8;
+		level = .75;
 		
 	} else if(theClip == 'blockhit2'){
 		soundToPlay = soundFour;
@@ -36,11 +36,11 @@ function PlaySoundString(theClip : String){
 		
 	} else if(theClip == 'changedirection'){
 		soundToPlay = soundFive;
-		level = .5;
+		level = .9;
 		
 	} else if(theClip == 'coin'){
 		soundToPlay = soundSix;
-		level = .8;
+		level = .5;
 		
 	} else if(theClip == 'error'){
 		soundToPlay = soundError;
