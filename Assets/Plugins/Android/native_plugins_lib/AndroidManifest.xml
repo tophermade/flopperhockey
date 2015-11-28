@@ -12,12 +12,8 @@
     <activity android:name="com.voxelbusters.nativeplugins.features.medialibrary.YoutubePlayerActivity" />
     <!--Application Launcher - Notifications : Used as a proxy to capture triggered notification.-->
     <activity android:name="com.voxelbusters.nativeplugins.features.notification.core.ApplicationLauncherFromNotification" android:theme="@style/FloatingActivityTheme" />
-    <!--SocialNetworking - Twitter : Generic helper activity-->
-    <activity android:name="com.voxelbusters.nativeplugins.features.socialnetwork.twitter.TwitterHelperActivity" android:theme="@style/FloatingActivityTheme" />
     <!--Game Play Services helper activity-->
     <activity android:name="com.voxelbusters.nativeplugins.features.gameservices.serviceprovider.google.GooglePlayGameUIActivity" android:theme="@style/FloatingActivityTheme" />
-    <!--Sharing-->
-    <activity android:name="com.voxelbusters.nativeplugins.features.sharing.SharingActivity" android:theme="@style/FloatingActivityTheme" />
     <!--UI  : Generic helper activity for launching Dialogs-->
     <activity android:name="com.voxelbusters.nativeplugins.features.ui.UiActivity" android:theme="@style/FloatingActivityTheme" />
     <!--Custom File Provider. Sharing from internal folders  "com.voxelbusters.nativeplugins.extensions.FileProviderExtended"-->
@@ -36,7 +32,7 @@
     <receiver android:name="com.voxelbusters.nativeplugins.features.notification.core.AlarmEventReceiver" />
     <!--Notifications : GCM Service-->
     <service android:name="com.voxelbusters.nativeplugins.features.notification.serviceprovider.gcm.GCMIntentService" />
-    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 615387297958" />
+    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 621147860291" />
   </application>
   <!--Permissions-->
   <!--Address Book-->

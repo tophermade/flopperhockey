@@ -12,7 +12,14 @@ public class MarketAgent : MonoBehaviour {
 	public GameObject RestoreButton;
 	public GameObject Adverts;
 	
-	string buyThis = "RemoveAds";
+	//string buyThis = "noads";
+	#if UNITY_ANDROID
+		string buyThis = "RemoveAds";
+	#endif
+
+	#if UNITY_IPHONE
+		string buyThis = "swigswag.noads";
+	#endif
 
 	void BuyNoAds(){
 		
