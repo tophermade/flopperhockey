@@ -74,6 +74,17 @@ function DestroyObstacles(){
 	for(var child : Transform in obstacleParent.transform){
 		Destroy(child.gameObject);
 	}
+
+	if(PlayerPrefs.GetInt("Highscore")){
+		var hs : int = PlayerPrefs.GetInt("Highscore");
+		if(PlayerPrefs.GetInt("Highscore") > 0){
+			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, hs *5, 0), Quaternion.identity);
+			highScoreSpot.transform.parent = obstacleParent.transform;
+			highScoreSpot.SendMessage("Highscore", hs);
+		}
+	} else {	
+		PlayerPrefs.SetInt("Highscore",0);
+	}
 }
 
 
@@ -120,16 +131,7 @@ function StartRound(){
 	playing = true;
 	puck.SendMessage("StartRound");
 
-	if(PlayerPrefs.GetInt("Highscore")){
-		var hs : int = PlayerPrefs.GetInt("Highscore");
-		if(PlayerPrefs.GetInt("Highscore") > 0){
-			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, hs *5, 0), Quaternion.identity);
-			highScoreSpot.transform.parent = obstacleParent.transform;
-			highScoreSpot.SendMessage("Highscore", hs);
-		}
-	} else {	
-		PlayerPrefs.SetInt("Highscore",0);
-	}
+	
 }
 
 

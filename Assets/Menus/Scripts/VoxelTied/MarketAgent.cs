@@ -14,7 +14,7 @@ public class MarketAgent : MonoBehaviour {
 	
 	//string buyThis = "noads";
 	#if UNITY_ANDROID
-		string buyThis = "RemoveAds";
+		string buyThis = "swigswag.noads";
 	#endif
 
 	#if UNITY_IPHONE
