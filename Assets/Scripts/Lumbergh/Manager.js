@@ -47,11 +47,11 @@ function SetupPlayer(){
 	} else if(playerName == "item02"){
 		spriteNum = 1;
 	} else if(playerName == "item03"){
-		spriteNum = 3;
+		spriteNum = 2;
 	} else if(playerName == "item04"){
-		spriteNum = 4;
+		spriteNum = 3;
 	} else if(playerName == "item05"){
-		spriteNum = 5;
+		spriteNum = 4;
 	} else if(playerName == "item06"){
 		spriteNum = 5;
 	} else if(playerName == "item07"){
@@ -193,6 +193,7 @@ function Start () {
 		puck = GameObject.Find("Puck");
 	}
 	puckSprite = GameObject.Find("PuckSprite");
+	SetupPlayer();
 	//StartRound();
 	//SpawnObstacle();
 }

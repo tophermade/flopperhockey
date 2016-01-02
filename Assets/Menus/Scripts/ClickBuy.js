@@ -24,8 +24,9 @@ function HexToColor(hex : String, alpha: int) : Color{
 
 
 function MakeActive(){
+	print(itemName);
 	PlayerPrefs.SetString("Player", itemName);
-	gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
+	//gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
 	lumbergh.SendMessage("SetupPlayer");
 }
 
@@ -55,6 +56,7 @@ function Click(){
 function Start(){
 	bank 		= GameObject.Find("Bank");
 	lumbergh 	= GameObject.Find("Lumbergh");
+	//gameObject.GetComponent(SpriteRenderer).color = HexToColor(ownedBackground, 100);
 
 	if(PlayerPrefs.HasKey(itemName + "-IsOwned")){
 
