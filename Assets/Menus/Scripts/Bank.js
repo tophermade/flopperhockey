@@ -21,6 +21,7 @@ function Withdraw(withdrawalAmount : int){
 
 
 function Start () {
+	//PlayerPrefs.DeleteAll();
 	bankCount = GameObject.Find("BankCount");
 
 	if(PlayerPrefs.HasKey("Balance")){

@@ -33,11 +33,18 @@ function MakeActive(){
 
 function TryPurchase(){
 	if(bank.GetComponent(Bank).balance >= itemCost){
-		bank.SendMessage("Withdrawal");
+		bank.SendMessage("Withdraw", itemCost);
 		itemOwned = true;
 		PlayerPrefs.SetInt(itemName + "-IsOwned", 1);
-		print("purchase succeeded");
+
+		for each (var child: Transform in transform.parent){
+			if (child.name == "Text"){
+				child.transform.gameObject.GetComponent(TextMesh).text = " ";
+			}
+		}
+		
 		MakeActive();
+		print("purchase succeeded");
 	} else {
 		print("purchase failed");
 	}
@@ -62,12 +69,18 @@ function Start(){
 
 		if(PlayerPrefs.GetInt(itemName + "-IsOwned") == 1){// owned
 			itemOwned = true;
-			
-			if(isActive){
-				gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
-			} else {
-				gameObject.GetComponent(SpriteRenderer).color = HexToColor(ownedBackground, 200);
+
+			for each (var child: Transform in transform.parent){
+				if (child.name == "Text"){
+					child.transform.gameObject.GetComponent(TextMesh).text = " ";
+				}
 			}
+			
+			// if(isActive){
+			// 	gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
+			// } else {
+			// 	gameObject.GetComponent(SpriteRenderer).color = HexToColor(ownedBackground, 200);
+			// }
 
 		} else {// not owned
 			itemOwned = false;
