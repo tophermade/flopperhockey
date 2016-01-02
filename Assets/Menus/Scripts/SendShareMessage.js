@@ -11,10 +11,10 @@ function Start(){
 
 function Click(){
 	#if UNITY_IPHONE
-		share.SendMessage("ShareText", "I just scored " + PlayerPrefs.GetInt("HighScore").ToString() + " in GAME NAME! Can you beat that? LINK TO ITUNES");
+		share.SendMessage("ShareText", "I just scored " + PlayerPrefs.GetInt("HighScore").ToString() + " in SwigSwag! Can you beat that?");
 	#endif
 
 	#if UNITY_ANDROID
-		share.SendMessage("ShareText", "I just scored " + PlayerPrefs.GetInt("HighScore").ToString() + " in GAME NAME! Can you beat that? LINK TO PLAY STORE");
+		share.SendMessage("ShareText", "I just scored " + PlayerPrefs.GetInt("HighScore").ToString() + " in SwigSwag! Can you beat that?");
 	#endif	
 }

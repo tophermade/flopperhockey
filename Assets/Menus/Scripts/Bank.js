@@ -26,7 +26,6 @@ function Start () {
 	if(PlayerPrefs.HasKey("Balance")){
 		balance = PlayerPrefs.GetInt("Balance");
 	} else {
-		balance = 25;
 		PlayerPrefs.SetInt("Balance", balance);
 	}
 

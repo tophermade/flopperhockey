@@ -3,11 +3,14 @@
 var puckObject 			: GameObject;
 var obstacleParent 		: GameObject;
 var spawn 				: GameObject;
+var advertObject		: GameObject;
 
 var obstacles 			: GameObject[];
+var playerSprites 		: Sprite[];
 
 var obstacle 			: GameObject;
 var puck 				: GameObject;
+var puckSprite 			: GameObject;
 
 var menuRoot 			: GameObject;
 var gameOverPanel 		: GameObject;
@@ -28,8 +31,45 @@ var score 				: int 			= 0;
 var spawnCount 			: int 			= 0;
 var lastSpawnAt 		: float 		= 0;
 var lastSpawnTime  		: float 		= 0;
+var plays 				: int 			= 0;
 
 var startingPosition 	: Vector2 		= Vector2(0,0);
+
+
+
+// player setting
+function SetupPlayer(){
+	var playerName 	: String = PlayerPrefs.GetString("Player");
+	var spriteNum 	: int = 0;
+
+	if(playerName == "item01"){
+		spriteNum = 0;
+	} else if(playerName == "item02"){
+		spriteNum = 1;
+	} else if(playerName == "item03"){
+		spriteNum = 3;
+	} else if(playerName == "item04"){
+		spriteNum = 4;
+	} else if(playerName == "item05"){
+		spriteNum = 5;
+	} else if(playerName == "item06"){
+		spriteNum = 5;
+	} else if(playerName == "item07"){
+		spriteNum = 6;
+	} else if(playerName == "item08"){
+		spriteNum = 7;
+	} else if(playerName == "item09"){
+		spriteNum = 8;
+	} else if(playerName == "item10"){
+		spriteNum = 9;
+	} else if(playerName == "item11"){
+		spriteNum = 10;
+	} else if(playerName == "item12"){
+		spriteNum = 11;
+	} 
+
+	puckSprite.GetComponent(SpriteRenderer).sprite = playerSprites[spriteNum];
+}
 
 
 
@@ -75,7 +115,7 @@ function DestroyObstacles(){
 		Destroy(child.gameObject);
 	}
 
-	if(PlayerPrefs.GetInt("Highscore")){
+	if(PlayerPrefs.HasKey("Highscore")){
 		var hs : int = PlayerPrefs.GetInt("Highscore");
 		if(PlayerPrefs.GetInt("Highscore") > 0){
 			highScoreSpot = Instantiate(highScorePrefab, Vector3(0, hs *5, 0), Quaternion.identity);
@@ -105,6 +145,10 @@ function EndRound(){
 	playing = false;
 	ProcessScore();
 
+	if(plays % 2){
+		advertObject.SendMessage("ShowInterstertial");
+	}
+
 	yield WaitForSeconds(.5);
 	menuRoot.SendMessage("ChangeActive", gameOverPanel);
 }
@@ -130,7 +174,7 @@ function StartRound(){
 	SetupRound();
 	playing = true;
 	puck.SendMessage("StartRound");
-
+	plays++;
 	
 }
 
@@ -144,9 +188,11 @@ function RestartGame(){
 
 // unity standard
 function Start () {
+	advertObject = GameObject.Find("Adverts");
 	if(!puck){
 		puck = GameObject.Find("Puck");
 	}
+	puckSprite = GameObject.Find("PuckSprite");
 	//StartRound();
 	//SpawnObstacle();
 }

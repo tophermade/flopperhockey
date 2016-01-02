@@ -1,69 +1,76 @@
 ﻿#pragma strict
 
 var bank 				: GameObject;
+var lumbergh 			: GameObject;
 
 var itemOwned 			: boolean 	= false;
+var isActive 			: boolean 	= false;
 var itemCost 			: int 		= 0;
 var itemName 			: String;
 var unownedBackground	: String 	= "333333";
-var ownedBackground 	: String 	= "ffffff";
+var activeBackground	: String 	= "333333";
+var ownedBackground 	: String 	= "ff0000";
 
 
 
-function HexToColor(hex : String) : Color{
+function HexToColor(hex : String, alpha: int) : Color{
     var r = byte.Parse(hex.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
     var g = byte.Parse(hex.Substring(2,2), System.Globalization.NumberStyles.HexNumber);
     var b = byte.Parse(hex.Substring(4,2), System.Globalization.NumberStyles.HexNumber);
-    return new Color32(r,g,b, 255);
+    return new Color32(r,g,b, alpha);
 }
 
 
-function MakeSelectionActive(){
-	IsOwned();
-	// what goes down here depends on the game
+
+
+function MakeActive(){
+	PlayerPrefs.SetString("Player", itemName);
+	gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
+	lumbergh.SendMessage("SetupPlayer");
 }
 
 
-function PurchaseComplete(){
-	PlayerPrefs.SetInt("Owns-" + itemName, 1);
-	MakeSelectionActive();
-}
-
-
-function PurchaseFailed(){
-
-}
-
-
-function IsOwned(){
-	itemOwned = true;
-	gameObject.GetComponent(SpriteRenderer).color = HexToColor(ownedBackground);
+function TryPurchase(){
+	if(bank.GetComponent(Bank).balance >= itemCost){
+		bank.SendMessage("Withdrawal");
+		itemOwned = true;
+		PlayerPrefs.SetInt(itemName + "-IsOwned", 1);
+		print("purchase succeeded");
+		MakeActive();
+	} else {
+		print("purchase failed");
+	}
 }
 
 
 function Click(){
 	if(itemOwned){
-		MakeSelectionActive();
+		MakeActive();
 	} else {
-		if(PlayerPrefs.GetInt("Balance") >= itemCost){
-			bank.SendMessage("Withdraw", itemCost);
-			PurchaseComplete();
-		} else {
-			PurchaseFailed();
+		TryPurchase();
+	}
+}
+
+
+function Start(){
+	bank 		= GameObject.Find("Bank");
+	lumbergh 	= GameObject.Find("Lumbergh");
+
+	if(PlayerPrefs.HasKey(itemName + "-IsOwned")){
+
+		if(PlayerPrefs.GetInt(itemName + "-IsOwned") == 1){// owned
+			itemOwned = true;
+			
+			if(isActive){
+				gameObject.GetComponent(SpriteRenderer).color = HexToColor(activeBackground, 255);
+			} else {
+				gameObject.GetComponent(SpriteRenderer).color = HexToColor(ownedBackground, 200);
+			}
+
+		} else {// not owned
+			itemOwned = false;
+			gameObject.GetComponent(SpriteRenderer).color = HexToColor(unownedBackground, 200);
 		}
+
 	}
-}
-
-function Start () {
-	bank = GameObject.Find("Bank");
-
-	if(PlayerPrefs.GetInt("Owns-" + itemName) == 1){
-		IsOwned();
-	} else {
-		gameObject.GetComponent(SpriteRenderer).color = HexToColor(unownedBackground);
-	}
-}
-
-function Update () {
-
 }

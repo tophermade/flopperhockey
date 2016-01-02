@@ -3,13 +3,8 @@ using System.Collections;
 
 public class ShareAgent : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	void ShareText(string txt){
+		ShareBunch.GetInstance().ShareText(txt);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

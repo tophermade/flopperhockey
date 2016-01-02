@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
-using UnityEngine.Advertisements;
+using System.Collections.Generic;
 // using AppodealAds.Unity.Api;
 // using AppodealAds.Unity.Common;
 
@@ -13,6 +14,8 @@ public class UnityAdsNwz : MonoBehaviour {
 
 	void ShowInterstertial(){
 		if(PlayerPrefs.GetString("ShowAds") != "false"){
+			print("show advert");
+			FGLConnector.ShowInterstitialAd();
 			// if(Appodeal.isLoaded(Appodeal.INTERSTITIAL)){
 			// 	Appodeal.show(Appodeal.INTERSTITIAL);
 			// }			
