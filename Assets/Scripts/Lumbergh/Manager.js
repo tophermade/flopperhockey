@@ -145,7 +145,7 @@ function EndRound(){
 	playing = false;
 	ProcessScore();
 
-	if(plays % 2){
+	if(plays % 5){
 		advertObject.SendMessage("ShowInterstertial");
 	}
 
